@@ -9,11 +9,17 @@ export interface AuthUser {
 
 export const SESSION_COOKIE_NAME = "meow_session";
 export const GUEST_COOKIE_NAME = "meow_guest";
+export const DEFAULT_AUTH_ACCOUNT = {
+  identifier: "Thảo",
+  password: "12345679",
+  displayName: "Thảo",
+} as const;
+const DEFAULT_AUTH_USER_ID = "usr-default-thao";
 const THIRTY_DAYS_SECONDS = 60 * 60 * 24 * 30;
 const SESSION_ONE_DAY_SECONDS = 60 * 60 * 24;
 
 function normalizeIdentifier(raw: string): string {
-  return raw.trim().toLowerCase();
+  return raw.trim().normalize("NFC").toLowerCase();
 }
 
 function hashPassword(password: string): string {
@@ -61,12 +67,37 @@ function syncProfileDisplayName(displayName: string): void {
   ).run(displayName, new Date().toISOString());
 }
 
+export function ensureDefaultAuthUser(): void {
+  const db = getDb();
+  const identifier = normalizeIdentifier(DEFAULT_AUTH_ACCOUNT.identifier);
+  const existing = db
+    .prepare("SELECT id FROM auth_users WHERE identifier = ? OR id = ?")
+    .get(identifier, DEFAULT_AUTH_USER_ID) as { id: string } | undefined;
+
+  if (existing) return;
+
+  const now = new Date().toISOString();
+  const passwordHash = hashPassword(DEFAULT_AUTH_ACCOUNT.password);
+  db.prepare(
+    `INSERT OR IGNORE INTO auth_users (id, identifier, display_name, password_hash, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  ).run(
+    DEFAULT_AUTH_USER_ID,
+    identifier,
+    DEFAULT_AUTH_ACCOUNT.displayName,
+    passwordHash,
+    now,
+    now
+  );
+}
+
 export function registerAuthUser(input: {
   identifier: string;
   password: string;
   displayName?: string;
   rememberMe?: boolean;
 }): { user: AuthUser; token: string; maxAgeSeconds?: number } {
+  ensureDefaultAuthUser();
   const identifier = normalizeIdentifier(input.identifier);
   if (identifier.length < 3 || /\s/.test(identifier)) {
     throw new Error(
@@ -116,6 +147,7 @@ export function loginAuthUser(input: {
   password: string;
   rememberMe?: boolean;
 }): { user: AuthUser; token: string; maxAgeSeconds?: number } {
+  ensureDefaultAuthUser();
   const identifier = normalizeIdentifier(input.identifier);
   if (!identifier || !input.password) {
     throw new Error("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.");

@@ -456,4 +456,19 @@ test("UC01 + Junior Studio API & SQLite persistence acceptance tests", async (t)
   assert.equal(okLoginRes.status, 200);
   const okLoginData = await okLoginRes.json();
   assert.equal(okLoginData.user.displayName, "Minh Thảo");
+
+  // Default account ("Thảo" / "12345679") works out-of-the-box without prior registration
+  const defaultLoginRes = await fetch(`${BASE_URL}/api/auth`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "login",
+      identifier: "Thảo",
+      password: "12345679",
+      rememberMe: true,
+    }),
+  });
+  assert.equal(defaultLoginRes.status, 200);
+  const defaultLoginData = await defaultLoginRes.json();
+  assert.equal(defaultLoginData.user.displayName, "Thảo");
 });

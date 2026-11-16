@@ -26,8 +26,8 @@ export function LoginClient({ initialUser }: LoginClientProps) {
   const router = useRouter();
   const [mode, setMode] = useState<"login" | "register">("login");
   const [displayName, setDisplayName] = useState("");
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
+  const [identifier, setIdentifier] = useState("Thảo");
+  const [password, setPassword] = useState("12345679");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [busy, setBusy] = useState<"submit" | "guest" | null>(null);
@@ -219,6 +219,8 @@ export function LoginClient({ initialUser }: LoginClientProps) {
                   onClick={() => {
                     setMode("login");
                     setError(null);
+                    if (!identifier) setIdentifier("Thảo");
+                    if (!password) setPassword("12345679");
                   }}
                   className={`cursor-pointer rounded-full px-5 py-2 text-xs font-bold transition-all ${
                     mode === "login"
@@ -235,6 +237,10 @@ export function LoginClient({ initialUser }: LoginClientProps) {
                   onClick={() => {
                     setMode("register");
                     setError(null);
+                    if (identifier === "Thảo" && password === "12345679") {
+                      setIdentifier("");
+                      setPassword("");
+                    }
                   }}
                   className={`cursor-pointer rounded-full px-5 py-2 text-xs font-bold transition-all ${
                     mode === "register"
@@ -345,22 +351,31 @@ export function LoginClient({ initialUser }: LoginClientProps) {
                   </div>
                 </div>
 
-                <label className="inline-flex cursor-pointer items-center gap-2.5 text-xs font-medium text-[#4E4F54] select-none">
-                  <button
-                    type="button"
-                    role="checkbox"
-                    aria-checked={rememberMe}
-                    onClick={() => setRememberMe((prev) => !prev)}
-                    className={`flex h-4.5 w-4.5 items-center justify-center rounded-md border transition-colors ${
-                      rememberMe
-                        ? "border-[#121316] bg-[#121316] text-white"
-                        : "border-[#CFCBC0] bg-white text-transparent"
-                    }`}
-                  >
-                    <Check className="h-3 w-3 stroke-[3]" />
-                  </button>
-                  <span>Ghi nhớ đăng nhập trên trình duyệt này</span>
-                </label>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <label className="inline-flex cursor-pointer items-center gap-2.5 text-xs font-medium text-[#4E4F54] select-none">
+                    <button
+                      type="button"
+                      role="checkbox"
+                      aria-checked={rememberMe}
+                      onClick={() => setRememberMe((prev) => !prev)}
+                      className={`flex h-4.5 w-4.5 items-center justify-center rounded-md border transition-colors ${
+                        rememberMe
+                          ? "border-[#121316] bg-[#121316] text-white"
+                          : "border-[#CFCBC0] bg-white text-transparent"
+                      }`}
+                    >
+                      <Check className="h-3 w-3 stroke-[3]" />
+                    </button>
+                    <span>Ghi nhớ đăng nhập trên trình duyệt này</span>
+                  </label>
+
+                  {mode === "login" && (
+                    <span className="rounded-full bg-[#F3F1EB] px-2.5 py-1 text-[11px] font-semibold text-[#5A5B60]">
+                      Mặc định: <strong className="text-[#17181C]">Thảo</strong> /{" "}
+                      <strong className="text-[#17181C]">12345679</strong>
+                    </span>
+                  )}
+                </div>
 
                 {error && (
                   <div className="rounded-2xl border border-[#F0C6D5] bg-[#FAE0E9] px-3.5 py-2.5 text-xs font-semibold text-[#7A2343]">
