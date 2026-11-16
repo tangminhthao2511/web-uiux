@@ -405,6 +405,7 @@ test("UC01 + Junior Studio API & SQLite persistence acceptance tests", async (t)
   assert.ok(html.includes("500 Bài Test"));
   assert.ok(html.includes("Hôm nay"));
   assert.ok(html.includes("UI Interactive Playground"));
+  assert.ok(html.includes("Thuật ngữ UI"));
   assert.ok(html.includes("BA &amp; Dev") || html.includes("BA & Dev"));
 
   // 12. Login & Registration page + /api/auth SQLite persistence

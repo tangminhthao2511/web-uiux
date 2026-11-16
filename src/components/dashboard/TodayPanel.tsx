@@ -101,8 +101,8 @@ export function TodayPanel({
       aria-label={
         collapsed ? "Thanh thu gọn Hôm nay" : "Nhiệm vụ và gợi ý học hôm nay"
       }
-      className={`border border-[#E3E0D7] bg-[#EFECE5] shadow-[0_4px_16px_rgba(18,19,22,0.04)] transition-[padding,border-radius] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        collapsed ? "rounded-[28px] p-2" : "rounded-[26px] p-4 sm:p-5"
+      className={`rounded-2xl border border-[#E3E0D7] bg-[#EFECE5] shadow-[0_4px_16px_rgba(18,19,22,0.04)] transition-[padding,border-radius] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        collapsed ? "p-2" : "p-4 sm:p-5"
       }`}
     >
       {/* Top Header Row — Always overflow-visible so tooltips never clip */}

@@ -34,7 +34,7 @@ export function Card({
 }: CardProps) {
   return (
     <div
-      className={`rounded-[22px] border shadow-[0_2px_10px_rgba(18,19,22,0.03)] ${TONE_CLASSES[tone]} ${className}`}
+      className={`rounded-2xl border shadow-[0_2px_10px_rgba(18,19,22,0.03)] ${TONE_CLASSES[tone]} ${className}`}
       {...props}
     >
       {children}

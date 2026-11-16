@@ -15,6 +15,7 @@ import {
   Layers,
   PanelRightOpen,
   Search,
+  Shapes,
   ShieldCheck,
   Users,
   X,
@@ -53,6 +54,7 @@ import {
 } from "./SettingsAndPhaseModals";
 import { SkillOverviewCard } from "./SkillOverviewCard";
 import { TodayPanel } from "./TodayPanel";
+import { UiTerminologyStudio } from "./UiTerminologyStudio";
 import { UiToFeLab } from "./UiToFeLab";
 
 interface DashboardClientProps {
@@ -105,6 +107,12 @@ const SECTION_META: Record<
     title: "Mini-Game Thị giác & Quiz Chuẩn",
     subtitle:
       "Luyện mắt bắt lỗi UI trực quan và tự kiểm tra nhanh quy chuẩn phổ biến.",
+  },
+  terminology: {
+    badgeLabel: "Thuật ngữ UI · Nối hình",
+    title: "Học 42 Tên Học Thuật Thành Phần UI",
+    subtitle:
+      "Nối đúng tên chuẩn Tooltip, FAB, Snackbar, Popover, Split Button, Command Palette, Data Table... với hình minh họa trực quan.",
   },
   practice: {
     badgeLabel: "Nộp bài Rubric",
@@ -305,7 +313,7 @@ export function DashboardClient({
         onLogout={handleLogout}
       />
 
-      <main className="manae-canvas-surface min-h-[calc(100vh-4rem)] rounded-t-[28px] border-t border-white/10 px-3 py-5 sm:px-5 lg:px-7">
+      <main className="manae-canvas-surface min-h-[calc(100vh-4rem)] rounded-t-2xl border-t border-white/10 px-3 py-5 sm:px-5 lg:px-7">
         <div className="mx-auto max-w-[1520px] space-y-4">
           {feedbackBanner && (
             <div
@@ -350,8 +358,8 @@ export function DashboardClient({
 
                 {/* Center + Right Grid */}
                 <div className="min-w-0 flex-1 space-y-4">
-                  {/* Slim Top Context Pill Bar */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#E3E0D7] bg-white/95 px-3 py-2.5 shadow-[0_1px_3px_rgba(18,19,22,0.03)] sm:rounded-full sm:py-2 sm:pl-2.5 sm:pr-3">
+                  {/* Context Header Card */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#E3E0D7] bg-white/95 px-4 py-3 shadow-[0_2px_10px_rgba(18,19,22,0.03)]">
                     <div className="flex min-w-0 items-center gap-2.5">
                       <MeowAvatar size={32} />
                       <div className="min-w-0">
@@ -462,6 +470,14 @@ export function DashboardClient({
                                   {snapshot.knowledgeBank?.totalQuestions ?? 500}{" "}
                                   câu Test đã đạt
                                 </Badge>
+                                <button
+                                  type="button"
+                                  onClick={() => setSection("terminology")}
+                                  className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#DBC9FA] bg-[#F4EEFF] px-3 py-1 text-xs font-bold text-[#4B2D8A] transition-colors hover:border-[#A78BFA]"
+                                >
+                                  <Shapes className="h-3.5 w-3.5" />
+                                  42 Thuật ngữ UI (Nối hình)
+                                </button>
                                 <button
                                   type="button"
                                   onClick={() => setSection("progress")}
@@ -763,6 +779,9 @@ export function DashboardClient({
 
                       {/* 4b. COLLABORATION WITH BA & DEV */}
                       {section === "collab" && <BaDevCollabStudio />}
+
+                      {/* 4c. UI COMPONENT TERMINOLOGY & VISUAL MATCHING */}
+                      {section === "terminology" && <UiTerminologyStudio />}
 
                       {/* 5. 500 TEST ROADMAP BANK */}
                       {section === "test_bank" && (

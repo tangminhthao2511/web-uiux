@@ -14,6 +14,7 @@ import {
   Menu,
   Newspaper,
   Settings,
+  Shapes,
   ShieldCheck,
   Users,
   X,
@@ -27,6 +28,7 @@ export type RailSectionId =
   | "collab"
   | "test_bank"
   | "minigames"
+  | "terminology"
   | "practice"
   | "hot_topics"
   | "guidelines"
@@ -50,6 +52,12 @@ export const RAIL_ITEMS: RailFeatureItem[] = [
     dividerAfter: true,
   },
   { id: "minigames", label: "Mini-Game & Quiz", icon: Gamepad2 },
+  {
+    id: "terminology",
+    label: "Thuật ngữ UI",
+    badge: "42",
+    icon: Shapes,
+  },
   { id: "test_bank", label: "500 Bài Test", badge: "500", icon: ShieldCheck },
   { id: "practice", label: "Nộp bài Rubric", icon: Layers },
   {
@@ -119,12 +127,10 @@ export function LeftFeatureRail({
           {expanded ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
         </button>
 
-        {/* Floating White Vertical Pill Container */}
+        {/* Floating White Vertical Rail Container */}
         <nav
           aria-label="Danh mục chức năng"
-          className={`flex w-full flex-col gap-1 overflow-hidden border border-[#E3E0D7] bg-white p-1.5 shadow-[0_4px_16px_rgba(18,19,22,0.05)] transition-[border-radius] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            expanded ? "rounded-[24px]" : "rounded-[27px]"
-          }`}
+          className="flex w-full flex-col gap-1 overflow-hidden rounded-2xl border border-[#E3E0D7] bg-white p-1.5 shadow-[0_4px_16px_rgba(18,19,22,0.05)] transition-[border-radius] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
         >
           {RAIL_ITEMS.map((item) => {
             const Icon = item.icon;

@@ -95,7 +95,7 @@ export function SkillOverviewCard({
               <div
                 key={skill.id}
                 title={`${skill.name}: ${skill.evidenceSummary}`}
-                className="inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 rounded-2xl border border-[#E3E0D7] bg-[#F7F6F2] px-3 py-1 text-xs sm:rounded-full"
+                className="inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 rounded-xl border border-[#E3E0D7] bg-[#F7F6F2] px-3 py-1.5 text-xs"
               >
                 <span className="font-medium text-[#17181C]">{skill.name}</span>
                 <span className="whitespace-nowrap text-[11px] text-[#6B6C72]">
